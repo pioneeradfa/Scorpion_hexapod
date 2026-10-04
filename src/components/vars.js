@@ -1,6 +1,5 @@
 import React from "react"
-import { GiCoffeeMug } from "react-icons/gi"
-import { FaGithubAlt, FaTimes, FaHome } from "react-icons/fa"
+import { FaTimes, FaHome } from "react-icons/fa"
 import { GrStatusGoodSmall } from "react-icons/gr"
 
 const SECTION_NAMES = {
@@ -92,9 +91,7 @@ const GAIT_RANGE_PARAMS = {
  *************/
 
 const ICON_COMPONENTS = {
-    mug: <GiCoffeeMug className="vertical-align" />,
     circle: <GrStatusGoodSmall className="small-icon" />,
-    octocat: <FaGithubAlt className="vertical-align" />,
     times: <FaTimes className="vertical-align" />,
     home: <FaHome className="vertical-align" />,
 }
@@ -132,20 +129,6 @@ const PATHS = {
     },
 }
 
-const KOFI_LINK_PROPERTIES = {
-    name: "KOFI",
-    icon: ICON_COMPONENTS.mug,
-    description: "Buy Mithi Ko-Fi 🍵",
-    url: "https://ko-fi.com/minimithi",
-}
-
-const REPO_LINK_PROPERTIES = {
-    name: "REPO",
-    icon: ICON_COMPONENTS.octocat,
-    description: "Source Code",
-    url: "https://github.com/mithi/hexapod",
-}
-
 const PATH_LINKS = [
     PATHS.inverseKinematics,
     PATHS.forwardKinematics,
@@ -154,7 +137,8 @@ const PATH_LINKS = [
     PATHS.landingPage,
 ]
 
-const URL_LINKS = [KOFI_LINK_PROPERTIES, REPO_LINK_PROPERTIES]
+// Keep the simulator navigation focused on this robot; no upstream external links.
+const URL_LINKS = []
 
 /*************
  * LANDING PAGE
@@ -162,9 +146,9 @@ const URL_LINKS = [KOFI_LINK_PROPERTIES, REPO_LINK_PROPERTIES]
 
 const LANDING_PAGE_MESSAGE = `
 
-# Mithi's Bare Minimum Hexapod Robot Simulator
+# Scorpion Hexapod Simulator
 
-Enjoy your stay and share with your friends!
+Kinematic and gait tools configured for the six-legged prototype.
 `
 
 export {

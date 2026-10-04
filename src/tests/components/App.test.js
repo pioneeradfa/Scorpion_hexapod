@@ -184,7 +184,7 @@ describe("App", () => {
     test("Navigates to Landing Page", () => {
         click("Root")
         const heading = screen.getByRole("heading", {
-            name: "Mithi's Bare Minimum Hexapod Robot Simulator",
+            name: "Scorpion Hexapod Simulator",
         })
         expect(heading).toBeInTheDocument()
 
