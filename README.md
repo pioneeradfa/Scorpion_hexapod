@@ -1,6 +1,6 @@
-# Scorpion Hexapod Simulator
+# Hexapod Robot Simulator
 
-A browser-based kinematics and gait simulator adapted from [Mithi's Bare-Minimum Hexapod Robot Simulator](https://github.com/mithi/hexapod) for the scorpion-style hexapod prototype described below. The calculations run in the browser; this project does not send commands to the physical servos.
+A browser-based kinematics and gait simulator adapted from Mithi's Bare-Minimum Hexapod Robot Simulator for the scorpion-style hexapod prototype described below. The calculations run in the browser; this project does not send commands to the physical servos.
 
 ## Prototype configuration
 
@@ -14,7 +14,7 @@ All model dimensions are in **millimetres**. The six coxa axes are arranged in t
 | Femur link: femur axis to tibia axis | 64.5 mm |
 | Tibia link: tibia axis to foot tip | 130.59 mm |
 
-The current body parameters are `front: 60`, `middle: 60`, and `side: 115` in `src/templates/hexapodParams.js`. In this model, `front` and `middle` are offsets from the body centre (half the 120 mm spacing); `side` is the offset of the front and rear stations from the middle station.
+The current body parameters are `front: 60`, `middle: 60`, and `side: 115` in `src/templates/hexapodParams.js`. In this model, `front` and `middle` are offsets from the body centre (half the 120 mm spacing); `side` is the offset of the front and rear stations from the middle station. All six hip mounts sit along the two side rails, not at the chassis corners. The simple outline currently extends 30 mm beyond the front and rear mounts; replace that visual estimate when the chassis edge dimensions are available.
 
 The prototype uses 18 RDS3218 servos (three per leg, specified as 20 kg and 270°). The simulator currently has **no tail model**, as requested.
 
@@ -62,4 +62,4 @@ The hardware `stand`, `sit`, and `belly_touch` poses in the reference Python con
 
 ## Attribution
 
-This project is based on [Mithi's Bare-Minimum Hexapod Robot Simulator 2](https://github.com/mithi/hexapod), originally created by [@mithi](https://github.com/mithi) and contributors. The upstream project is licensed under the Apache License 2.0; see [LICENSE](./LICENSE).
+This project is based on Mithi's Bare-Minimum Hexapod Robot Simulator 2 and its contributors. The upstream project is licensed under the Apache License 2.0; see [LICENSE](./LICENSE).

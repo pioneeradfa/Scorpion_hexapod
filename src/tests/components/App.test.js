@@ -181,10 +181,14 @@ describe("App", () => {
         expectToHaveDefaultForwardKinematics()
     })
 
+    test("Removes the old external support and source links", () => {
+        expect(screen.queryByRole("link", { name: /ko-fi|source code/i })).toBeNull()
+    })
+
     test("Navigates to Landing Page", () => {
-        click("Root")
+        click("Home")
         const heading = screen.getByRole("heading", {
-            name: "Mithi's Bare Minimum Hexapod Robot Simulator",
+            name: "Hexapod Robot Simulator",
         })
         expect(heading).toBeInTheDocument()
 
