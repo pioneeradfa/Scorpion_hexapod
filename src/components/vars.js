@@ -7,7 +7,7 @@ const SECTION_NAMES = {
     inverseKinematics: "Inverse Kinematics",
     forwardKinematics: "Forward Kinematics",
     legPatterns: "Leg Patterns",
-    landingPage: "Root",
+    landingPage: "Home",
     walkingGaits: "Walking Gaits",
 }
 
@@ -130,11 +130,11 @@ const PATHS = {
 }
 
 const PATH_LINKS = [
+    PATHS.landingPage,
+    PATHS.walkingGaits,
     PATHS.inverseKinematics,
     PATHS.forwardKinematics,
     PATHS.legPatterns,
-    PATHS.walkingGaits,
-    PATHS.landingPage,
 ]
 
 // Keep the simulator navigation focused on this robot; no upstream external links.
@@ -146,7 +146,7 @@ const URL_LINKS = []
 
 const LANDING_PAGE_MESSAGE = `
 
-# Scorpion Hexapod Simulator
+# Hexapod Robot Simulator
 
 Kinematic and gait tools configured for the six-legged prototype.
 `

@@ -1,4 +1,4 @@
-# Scorpion Hexapod Simulator
+# Hexapod Robot Simulator
 
 A browser-based kinematics and gait simulator adapted from Mithi's Bare-Minimum Hexapod Robot Simulator for the scorpion-style hexapod prototype described below. The calculations run in the browser; this project does not send commands to the physical servos.
 

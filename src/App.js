@@ -18,7 +18,7 @@ class App extends React.Component {
      * * * * * * * * * * * * * */
 
     onPageLoad = pageName => {
-        document.title = pageName + " - Scorpion Hexapod Simulator"
+        document.title = pageName + " - Hexapod Robot Simulator"
 
         if (pageName === SECTION_NAMES.landingPage) {
             this.setState({ inHexapodPage: false })
@@ -63,7 +63,10 @@ class App extends React.Component {
     render = () => (
         <Router>
             <Nav />
-            <div id="main">
+            <div
+                id="main"
+                className={this.state.inHexapodPage ? "sim-layout" : "landing-layout"}
+            >
                 <div id="sidebar">
                     <div hidden={!this.state.inHexapodPage}>
                         <DimensionsWidget
@@ -72,7 +75,6 @@ class App extends React.Component {
                         />
                     </div>
                     <Page pageComponent={this.pageComponent} />
-                    {!this.state.inHexapodPage ? <NavDetailed /> : null}
                 </div>
                 <div id="plot" className="border" hidden={!this.state.inHexapodPage}>
                     <HexapodPlot
@@ -81,7 +83,7 @@ class App extends React.Component {
                     />
                 </div>
             </div>
-            {this.state.inHexapodPage ? <NavDetailed /> : null}
+            <NavDetailed />
         </Router>
     )
 }
