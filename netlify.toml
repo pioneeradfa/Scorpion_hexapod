@@ -1,0 +1,3 @@
+[build.environment]
+  # react-scripts 3 (webpack 4) uses the legacy MD4 hash, which OpenSSL 3 disables by default
+  NODE_OPTIONS = "--openssl-legacy-provider"
