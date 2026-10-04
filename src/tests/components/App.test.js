@@ -26,19 +26,26 @@ const expectToHaveDefaultDimensionsWidget = () => {
     const heading = screen.getByRole("heading", { name: "Dimensions" })
     expect(heading).toBeInTheDocument()
 
-    const dimensions = ["front", "middle", "side", "femur", "coxia", "tibia"]
-    const attributes = [
-        { key: "value", value: "100" },
+    const dimensions = {
+        front: 60,
+        middle: 60,
+        side: 115,
+        femur: 64.5,
+        coxia: 64.5,
+        tibia: 130.59,
+    }
+    const commonAttributes = [
         { key: "max", value: "Infinity" },
         { key: "min", value: "0" },
-        { key: "step", value: "1" },
+        { key: "step", value: "0.01" },
         { key: "type", value: "number" },
     ]
 
-    dimensions.forEach(name => {
+    Object.entries(dimensions).forEach(([name, value]) => {
         expect(screen.getByLabelText(name)).toBeInTheDocument()
         const node = screen.getByRole("spinbutton", { name })
-        attributes.forEach(attribute => {
+        expect(node).toHaveAttribute("value", `${value}`)
+        commonAttributes.forEach(attribute => {
             expect(node).toHaveAttribute(attribute.key, attribute.value)
         })
     })
