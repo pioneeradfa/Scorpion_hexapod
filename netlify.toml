@@ -1,0 +1,9 @@
+[build]
+  command = "yarn run build"
+  publish = "build"
+
+[build.environment]
+  # react-scripts 3.x bundles webpack 4, which relies on MD4 hashing that
+  # OpenSSL 3 (Node 17+) disables by default.
+  NODE_VERSION = "18"
+  NODE_OPTIONS = "--openssl-legacy-provider"
