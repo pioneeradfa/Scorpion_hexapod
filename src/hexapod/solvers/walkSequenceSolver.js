@@ -15,6 +15,18 @@ const RIPPLE_PHASES = {
     rightMiddle: 5 / 6,
 }
 
+// One foot lifts at a time, travelling front-to-rear on the right side, then
+// front-to-rear on the left. Offsets are reversed because swing starts at the
+// end of each leg's local phase cycle.
+const CATERPILLAR_PHASES = {
+    rightFront: 5 / 6,
+    rightMiddle: 4 / 6,
+    rightBack: 3 / 6,
+    leftFront: 2 / 6,
+    leftMiddle: 1 / 6,
+    leftBack: 0 / 6,
+}
+
 /*
  * Generate a cyclic Cartesian foot path, then solve the hexapod IK for every
  * frame. `hipSwing` and `liftSwing` remain angular controls for compatibility
@@ -70,9 +82,10 @@ const getWalkSequence = (
         return null
     }
 
-    const frameMultiplier = gaitType === "ripple" ? 6 : 4
+    const isSequentialGait = gaitType === "ripple" || gaitType === "caterpillar"
+    const frameMultiplier = isSequentialGait ? 6 : 4
     const numberOfFrames = Math.max(1, Math.round(stepCount) * frameMultiplier)
-    const dutyFactor = gaitType === "ripple" ? 5 / 6 : 0.65
+    const dutyFactor = isSequentialGait ? 5 / 6 : 0.65
     const bodyPoints = stanceHexapod.body.verticesList
     const baseFeet = stanceHexapod.legs.map(leg => leg.footTipPoint)
     const bodyCog = stanceHexapod.body.cog
@@ -206,6 +219,9 @@ const buildIKSequence = ({
 const getPhaseOffset = (position, gaitType) => {
     if (gaitType === "ripple") {
         return RIPPLE_PHASES[position]
+    }
+    if (gaitType === "caterpillar") {
+        return CATERPILLAR_PHASES[position]
     }
     return TRIPOD_A.has(position) ? 0 : 0.5
 }

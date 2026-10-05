@@ -181,6 +181,18 @@ describe("App", () => {
         expectToHaveDefaultForwardKinematics()
     })
 
+    test("Selects the Caterpillar walking gait", () => {
+        click("Walking Gaits")
+        const caterpillarButton = screen.getByRole("button", { name: "Caterpillar" })
+        expect(caterpillarButton).toHaveAttribute("aria-pressed", "false")
+
+        fireEvent.click(caterpillarButton)
+        expect(screen.getByRole("button", { name: "Caterpillar" })).toHaveAttribute(
+            "aria-pressed",
+            "true"
+        )
+    })
+
     test("Removes the old external support and source links", () => {
         expect(screen.queryByRole("link", { name: /ko-fi|source code/i })).toBeNull()
     })

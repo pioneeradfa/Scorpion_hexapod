@@ -75,7 +75,7 @@ const TOOL_CARDS = [
         path: PATHS.walkingGaits.path,
         number: "01",
         title: SECTION_NAMES.walkingGaits,
-        text: "Preview tripod and ripple steps solved from foot paths.",
+        text: "Preview tripod, ripple, and caterpillar steps solved from foot paths.",
     },
     {
         path: PATHS.inverseKinematics.path,

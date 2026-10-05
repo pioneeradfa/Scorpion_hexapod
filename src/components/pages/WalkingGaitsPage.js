@@ -9,6 +9,18 @@ import { DEFAULT_GAIT_PARAMS } from "../../templates"
 
 const ANIMATION_DELAY = 25
 
+const GAIT_OPTIONS = [
+    { value: "tripod", label: "Tripod" },
+    { value: "ripple", label: "Ripple" },
+    { value: "caterpillar", label: "Caterpillar" },
+]
+
+const GAIT_DESCRIPTIONS = {
+    tripod: "Three legs support the body while the alternate tripod swings.",
+    ripple: "A diagonal wave advances around the six legs, one step at a time.",
+    caterpillar: "A single-leg wave travels from front to rear along each side.",
+}
+
 const getPose = (sequences, i) => {
     return Object.keys(sequences).reduce((newSequences, legPosition) => {
         const { alpha, beta, gamma } = sequences[legPosition]
@@ -38,7 +50,7 @@ class WalkingGaitsPage extends Component {
     state = {
         gaitParams: DEFAULT_GAIT_PARAMS,
         isAnimating: false,
-        isTripodGait: true,
+        gaitType: "tripod",
         isForward: true,
         inWalkMode: true,
         showGaitWidgets: true,
@@ -47,8 +59,8 @@ class WalkingGaitsPage extends Component {
 
     componentDidMount = () => {
         this.props.onMount(this.pageName)
-        const { isTripodGait, inWalkMode } = this.state
-        this.setWalkSequence(DEFAULT_GAIT_PARAMS, isTripodGait, inWalkMode)
+        const { gaitType, inWalkMode } = this.state
+        this.setWalkSequence(DEFAULT_GAIT_PARAMS, gaitType, inWalkMode)
     }
 
     componentWillUnmount = () => {
@@ -95,8 +107,7 @@ class WalkingGaitsPage extends Component {
         this.props.onUpdate("hexapod", { hexapod: hexapod.cloneTrot(matrix) })
     }
 
-    setWalkSequence = (gaitParams, isTripodGait, inWalkMode) => {
-        const gaitType = isTripodGait ? "tripod" : "ripple"
+    setWalkSequence = (gaitParams, gaitType, inWalkMode) => {
         const walkMode = inWalkMode ? "walking" : "rotating"
 
         const { dimensions } = this.props.params
@@ -108,31 +119,32 @@ class WalkingGaitsPage extends Component {
 
         const pose = getPose(this.walkSequence, animationCount)
         this.onUpdate(pose, this.currentTwist)
-        this.setState({ gaitParams, isTripodGait, inWalkMode })
+        this.setState({ gaitParams, gaitType, inWalkMode })
     }
 
     reset = () => {
-        const { isTripodGait, inWalkMode } = this.state
+        const { gaitType, inWalkMode } = this.state
         this.currentTwist = 0
-        this.setWalkSequence(DEFAULT_GAIT_PARAMS, isTripodGait, inWalkMode)
+        this.setWalkSequence(DEFAULT_GAIT_PARAMS, gaitType, inWalkMode)
     }
 
     updateGaitParams = (name, value) => {
-        const { isTripodGait, inWalkMode } = this.state
+        const { gaitType, inWalkMode } = this.state
         const gaitParams = { ...this.state.gaitParams, [name]: value }
-        this.setWalkSequence(gaitParams, isTripodGait, inWalkMode)
+        this.setWalkSequence(gaitParams, gaitType, inWalkMode)
     }
 
     toggleWalkMode = () => {
-        const { gaitParams, isTripodGait } = this.state
+        const { gaitParams, gaitType } = this.state
         const inWalkMode = !this.state.inWalkMode
-        this.setWalkSequence(gaitParams, isTripodGait, inWalkMode)
+        this.setWalkSequence(gaitParams, gaitType, inWalkMode)
     }
 
-    toggleGaitType = () => {
+    selectGaitType = gaitType => {
         const { gaitParams, inWalkMode } = this.state
-        const isTripodGait = !this.state.isTripodGait
-        this.setWalkSequence(gaitParams, isTripodGait, inWalkMode)
+        if (gaitType !== this.state.gaitType) {
+            this.setWalkSequence(gaitParams, gaitType, inWalkMode)
+        }
     }
 
     toggleWidgets = () => this.setState({ showGaitWidgets: !this.state.showGaitWidgets })
@@ -160,9 +172,31 @@ class WalkingGaitsPage extends Component {
         return newSwitch("animatingSw", value, this.toggleAnimating)
     }
 
-    get gaitTypeSwitch() {
-        const value = this.state.isTripodGait ? "tripodGait" : "rippleGait"
-        return newSwitch("gaitSw", value, this.toggleGaitType)
+    get gaitTypeSelector() {
+        const { gaitType } = this.state
+        return (
+            <div className="gait-selector-panel">
+                <span className="label">Walking gait</span>
+                <div className="gait-selector" role="group" aria-label="Walking gait">
+                    {GAIT_OPTIONS.map(option => (
+                        <button
+                            type="button"
+                            key={option.value}
+                            className={`gait-option${
+                                gaitType === option.value ? " is-selected" : ""
+                            }`}
+                            aria-pressed={gaitType === option.value}
+                            onClick={() => this.selectGaitType(option.value)}
+                        >
+                            {option.label}
+                        </button>
+                    ))}
+                </div>
+                <p className="gait-description" aria-live="polite">
+                    {GAIT_DESCRIPTIONS[gaitType]}
+                </p>
+            </div>
+        )
     }
 
     get directionSwitch() {
@@ -200,10 +234,14 @@ class WalkingGaitsPage extends Component {
             this.animatingSwitch,
             this.widgetsSwitch
         )
-        const gaitControlSwitches = switches(
-            this.gaitTypeSwitch,
-            this.directionSwitch,
-            this.rotateSwitch
+        const gaitControlSwitches = (
+            <div className="gait-control-panel">
+                {this.gaitTypeSelector}
+                <div className="grid-cols-2 gait-mode-switches">
+                    {this.directionSwitch}
+                    {this.rotateSwitch}
+                </div>
+            </div>
         )
 
         const { showGaitWidgets } = this.state

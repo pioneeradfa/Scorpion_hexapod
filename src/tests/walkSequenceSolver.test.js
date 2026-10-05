@@ -7,6 +7,7 @@ const JOINT_NAMES = ["alpha", "beta", "gamma"]
 const cases = [
     { gaitType: "tripod", walkMode: "walking", frameMultiplier: 4 },
     { gaitType: "ripple", walkMode: "walking", frameMultiplier: 6 },
+    { gaitType: "caterpillar", walkMode: "walking", frameMultiplier: 6 },
     { gaitType: "tripod", walkMode: "rotating", frameMultiplier: 4 },
 ]
 

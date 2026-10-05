@@ -22,7 +22,8 @@ The prototype uses 18 RDS3218 servos (three per leg, specified as 20 kg and 270�
 
 - Interactive 3D hexapod view and editable dimensions.
 - Forward kinematics, inverse kinematics, leg-pose controls, and support/stability checks.
-- Tripod and ripple gait options, forward/backward playback, and rotation mode.
+- Tripod, ripple, and caterpillar gait options, forward/backward playback, and rotation mode.
+  Caterpillar advances a single-leg wave from front to rear along each side.
 - Gait frames are generated from Cartesian foot paths and solved through IK. If a requested stride or lift is unreachable, the solver reduces the gait amplitude until it finds a reachable sequence.
 - The initial gait settings use the prototype's tripod reference values: 15° hip swing and 20° lift swing.
 
